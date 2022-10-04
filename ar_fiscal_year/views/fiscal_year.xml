@@ -1,0 +1,56 @@
+<odoo>
+  <data>
+
+<!-- form view -->
+    <record id="fiscal_year_view_form" model="ir.ui.view">
+      <field name="name">fiscal.year.view.form</field>
+      <field name="model">account.fiscal.year</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+                <group >
+                  <field name="name" />
+                  <field name="company_id" 
+                  options="{'no_create': True}" groups="base.group_multi_company"
+                  />
+                </group>
+                <group>
+                  <field name="date_from" />
+                  <field name="date_to" />
+                </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>   
+
+<!-- tree    -->
+    <record id="fiscal_year_view_tree" model="ir.ui.view">
+      <field name="name">fiscal.year.view.tree</field>
+      <field name="model">account.fiscal.year</field>
+      <field name="arch" type="xml">
+        <tree>
+          <field name="name"/>
+          <field name="date_from" />
+          <field name="date_to" />
+        </tree>
+      </field>
+    </record>
+
+<!-- actions opening views on models -->
+
+    <record model="ir.actions.act_window" id="ar_fiscal_years_action">
+      <field name="name">fiscal years</field>
+      <field name="res_model">account.fiscal.year</field>
+      <field name="view_mode">tree,form</field>
+    </record>
+
+<!-- menuitem -->
+
+    <menuitem name="Fiscal Years" id="ar_fiscal_year_menu"
+    parent="account.account_account_menu"
+    action="ar_fiscal_years_action"/>
+
+  </data>
+</odoo>

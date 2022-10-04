@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ar_fiscal_year_readonly,ar_fiscal_year.ar_fiscal_year_readonly,model_account_fiscal_year,account.group_account_user,1,0,0,0
+access_ar_fiscal_year_manager,ar_fiscal_year.ar_fiscal_year_manager,model_account_fiscal_year,account.group_account_manager,1,1,1,1
+access_ar_fiscal_year_lock_date,ar_fiscal_year.access_ar_fiscal_year_lock_date,model_change_lock_date,account.group_account_manager,1,1,1,0
