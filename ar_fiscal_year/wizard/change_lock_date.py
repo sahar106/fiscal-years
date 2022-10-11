@@ -6,6 +6,21 @@ class ChangeLockDate(models.TransientModel):
     _name = 'change.lock.date'
     _description = 'Change Lock Date'
     
+    
+    
+    @api.model
+    def default_get(self, vals):
+        res = super(ChangeLockDate, self).default_get(vals)
+        print('hi')
+        company_rec = self.env.user.company_id
+        res.update({
+            'company_id': company_rec.id,
+            'period_lock_date': company_rec.period_lock_date,
+            'fiscalyear_lock_date': company_rec.fiscalyear_lock_date,
+            'tax_lock_date': company_rec.tax_lock_date,
+        })
+        return res
+    
     period_lock_date = fields.Date(string='Lock Date for Non-Advisers' ,
                                    default=lambda self: self.env.company.period_lock_date,
                                    help ="Only users with the 'Adviser' role can edit accounts prior to and inclusive of this date. Use it for period locking inside an open fiscal year, for example")
@@ -19,8 +34,8 @@ class ChangeLockDate(models.TransientModel):
     
     
     def change_lock_date(self):
-        if self.env.user.has_groups('account.group_account_manager'):
-            self.env.company_id.sudo().write({
+        if self.env.user.has_group('account.group_account_manager'):
+            self.company_id.sudo().write({
                 'period_lock_date': self.period_lock_date,
                 'fiscalyear_lock_date': self.fiscalyear_lock_date,
                 'tax_lock_date':self.tax_lock_date,
